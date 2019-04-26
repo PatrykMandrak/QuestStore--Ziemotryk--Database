@@ -43,12 +43,4 @@ public class ResponseCreator {
         response = template.render(model);
         return response;
     }
-
-    private JtwigTemplate getTemplateByFile(String fileName) {
-        return JtwigTemplate.classpathTemplate("templates/" + fileName);
-    }
-
-    private JtwigModel getNewModel() {
-        return JtwigModel.newModel();
-    }
 }
