@@ -11,9 +11,9 @@ import java.io.IOException;
 public class MentorController {
     private MentorService mentorService = new MentorService();
 
-//    public String getIndexPage(HttpExchange httpExchange) {
-//        return this.mentorService.getIndexPageRender(httpExchange);
-//    }
+    public String getIndexPage(HttpExchange httpExchange) {
+        return this.mentorService.getIndexPageRender(httpExchange);
+    }
 
     public String getIndexPage(int id) {
         return this.mentorService.getIndexPageRender(id);
