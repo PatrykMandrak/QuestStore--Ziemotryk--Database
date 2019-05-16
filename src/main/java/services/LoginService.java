@@ -9,7 +9,11 @@ import java.util.Map;
 
 public class LoginService {
     private ResponseCreator responseCreator = new ResponseCreator();
-    private AccountsDAO accountsDAO = new AccountsDAO();
+    private AccountsDAO accountsDAO;
+
+    public LoginService(AccountsDAO accountsDAO) {
+        this.accountsDAO = accountsDAO;
+    }
 
     public String getLoginPageRender() {
         return responseCreator.renderLoginPage();

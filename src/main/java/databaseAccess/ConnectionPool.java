@@ -59,17 +59,14 @@ public class ConnectionPool implements IConnectionPool {
         return connectionPool.size() + usedConnections.size();
     }
 
-    @Override
     public String getUrl() {
         return url;
     }
 
-    @Override
     public String getUser() {
         return user;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }

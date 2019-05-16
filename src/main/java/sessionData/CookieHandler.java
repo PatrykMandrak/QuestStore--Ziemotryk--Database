@@ -26,7 +26,7 @@ public class CookieHandler {
         return cookie.get().getValue().replaceAll("\"", "");
     }
 
-    private List<HttpCookie> parseCookies(String cookieString) {
+    List<HttpCookie> parseCookies(String cookieString) {
         List<HttpCookie> cookies = new ArrayList<>();
         if (cookieString == null || cookieString.isEmpty()) { // what happens if cookieString = null?
             return cookies;
