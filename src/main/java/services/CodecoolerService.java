@@ -25,10 +25,20 @@ public class CodecoolerService {
     private CookieHandler cookieHandler = new CookieHandler();
     private SessionHandler sessionHandler = SessionHandler.getInstance();
 
+    private CodecoolersDAO codecoolersDAO;
+    private ArtifactsDAO artifactsDAO;
+    private BackpacksDAO backpacksDAO;
+
+    public CodecoolerService(CodecoolersDAO codecoolersDAO, ArtifactsDAO artifactsDAO, BackpacksDAO backpacksDAO) {
+        this.codecoolersDAO = codecoolersDAO;
+        this.artifactsDAO = artifactsDAO;
+        this.backpacksDAO = backpacksDAO;
+    }
+
     public String getIndexPageRender(int id) {
 
         List<Codecooler> codecooler = new ArrayList<>();
-        codecooler.add(new CodecoolersDAO().get(id));
+        codecooler.add(codecoolersDAO.get(id));
 
         return codecoolerResponseCreator.renderIndexPage(codecooler);
     }
@@ -40,7 +50,7 @@ public class CodecoolerService {
     }
 
     public String getArtifactStorePageRender() {
-        List<Artifact> artifacts = new ArtifactsDAO().getAll();
+        List<Artifact> artifacts = artifactsDAO.getAll();
 
         return codecoolerResponseCreator.renderArtifactStorePage(artifacts);
     }
@@ -48,7 +58,7 @@ public class CodecoolerService {
     public String getBackpackPageRender(HttpExchange httpExchange) {
         int id = getAccountIdBy(httpExchange);
 
-        List<Backpack> backpacks = new CodecoolersDAO().get(id).getBackpacks();
+        List<Backpack> backpacks = codecoolersDAO.get(id).getBackpacks();
 
         return codecoolerResponseCreator.renderBackpackPage(backpacks);
     }
@@ -56,13 +66,13 @@ public class CodecoolerService {
 
     public void buyArtifact(HttpExchange httpExchange) {
         int accountId = getAccountIdBy(httpExchange);
-        Codecooler codecooler = new CodecoolersDAO().get(accountId);
+        Codecooler codecooler = codecoolersDAO.get(accountId);
 
         int artifactId = getIdByURL(httpExchange);
         int amountOfCoolcoins = codecooler.getCoolcoins();
-        int artifactPrize = new ArtifactsDAO().get(artifactId).getPrize();
+        int artifactPrize = artifactsDAO.get(artifactId).getPrize();
 
-        String artifactName = new ArtifactsDAO().get(artifactId).getName();
+        String artifactName = artifactsDAO.get(artifactId).getName();
         String codecoolerFullName = codecooler.getFullName();
 
         if (enoughCoins(amountOfCoolcoins, artifactPrize)) {
@@ -74,7 +84,7 @@ public class CodecoolerService {
         }
     }
 
-    private boolean enoughCoins(int codecoolerCoolcoins, int artifactPrize) {
+    boolean enoughCoins(int codecoolerCoolcoins, int artifactPrize) {
         if (codecoolerCoolcoins >= artifactPrize) {
             return true;
         } else {
@@ -102,12 +112,10 @@ public class CodecoolerService {
 
     private void reduceCodecoolerCoolcoins(Codecooler codecooler, int amountOfCoolcoins, int artifactPrize) {
         codecooler.setCoolcoins(amountOfCoolcoins - artifactPrize);
-        CodecoolersDAO codecoolersDAO = new CodecoolersDAO();
         codecoolersDAO.update(codecooler.getClassId(), codecooler);
     }
 
     private void addItemToBackpack(Codecooler codecooler, int artifactId) {
-        BackpacksDAO backpacksDAO = new BackpacksDAO();
         Backpack backpack = new Backpack(codecooler.getBackpackId(), artifactId, false);
         backpacksDAO.add(backpack);
     }

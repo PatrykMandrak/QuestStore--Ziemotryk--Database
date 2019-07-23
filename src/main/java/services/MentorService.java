@@ -160,7 +160,8 @@ public class MentorService {
                 new ClassesDAO().getClassIdByName(String.valueOf(inputs.get("assignedClass"))),
                 inputs.get("fullName"),
                 inputs.get("email"),
-                "emptyAvatar404.jpg" // none for now
+                "emptyAvatar404.jpg", // none for now
+                new BackpacksDAO()
         );
     }
 

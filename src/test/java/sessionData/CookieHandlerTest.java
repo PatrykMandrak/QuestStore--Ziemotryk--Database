@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CookieHandlerTest {
 
@@ -60,5 +62,29 @@ class CookieHandlerTest {
         Optional<HttpCookie> parsedCookie = cookieHandler.findCookieByName("session", cookies);
 
         assertFalse(parsedCookie.isPresent());
+    }
+
+    @Test
+    void getSessionIdCookieValue_changeCookieWithQuotes_returnStringWithoutQuotes(){
+        HttpCookie httpCookie = mock(HttpCookie.class);
+        Optional<HttpCookie> cookie = Optional.of(httpCookie);
+        String cookieString = "\"a\"b:b";
+
+
+        when(cookie.get().getValue()).thenReturn(cookieString);
+        String answer = cookieHandler.getSessionIdCookieValue(cookie);
+        assertEquals("ab:b", answer);
+
+    }
+
+    @Test
+    void getSessionIdCookieValue_dontChangeAnythingWhenNoQuotes_returnOriginalString(){
+        HttpCookie httpCookie = mock(HttpCookie.class);
+        Optional<HttpCookie> cookie = Optional.of(httpCookie);
+        String cookieString = "dupa";
+
+        when(cookie.get().getValue()).thenReturn(cookieString);
+        String answer = cookieHandler.getSessionIdCookieValue(cookie);
+        assertEquals("dupa", answer);
     }
 }

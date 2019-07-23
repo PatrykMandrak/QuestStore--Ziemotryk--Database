@@ -1,12 +1,15 @@
 package controllers;
 
+import databaseAccess.ArtifactsDAO;
+import databaseAccess.BackpacksDAO;
+import databaseAccess.CodecoolersDAO;
 import services.CodecoolerService;
 
 import com.sun.net.httpserver.HttpExchange;
 import sessionData.SessionHandler;
 
 public class CodecoolerController {
-    private CodecoolerService codecoolerService = new CodecoolerService();
+    private CodecoolerService codecoolerService = new CodecoolerService(new CodecoolersDAO(), new ArtifactsDAO(), new BackpacksDAO());
 
 
     public String getIndexPage(int accountId) {

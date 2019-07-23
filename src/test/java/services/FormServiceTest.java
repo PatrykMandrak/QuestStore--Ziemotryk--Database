@@ -69,16 +69,4 @@ class FormServiceTest {
 
         assertNull(formMap.get("value"));
     }
-
-    //do we need to have this as a separate test?
-    @Test
-    void getInputsStringMap_ValueWithSpecialCharacters_MapContainsDecodedValueUnderKey() throws IOException {
-        String url = "value=value%40value%20value%20value%3Dvalue&otherval=other";
-        InputStream is = new ByteArrayInputStream(url.getBytes(StandardCharsets.UTF_8));
-        when(exchange.getRequestBody()).thenReturn(is);
-
-        Map<String, String> formMap = FormService.getInputsStringMap(exchange);
-
-        assertEquals("value@value value value=value", formMap.get("value"));
-    }
 }

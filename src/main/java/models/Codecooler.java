@@ -14,21 +14,24 @@ public class Codecooler {
     private String email;
     private String avatarFile;
     private int coolcoins;
+    private BackpacksDAO backpacksDAO;
 
-    public Codecooler(int accountId, int classId, String fullName, String email, String avatarFile) {
+    public Codecooler(int accountId, int classId, String fullName, String email, String avatarFile, BackpacksDAO backpacksDAO) {
         this.accountId = accountId;
         this.classId = classId;
         this.fullName = fullName;
         this.email = email;
         this.avatarFile = avatarFile;
         this.coolcoins = 0;
+        this.backpacksDAO = backpacksDAO;
     }
 
-    public Codecooler(String fullName, String email, String avatarFile, int coolcoins) {
+    public Codecooler(String fullName, String email, String avatarFile, int coolcoins, BackpacksDAO backpacksDAO) {
         this.fullName = fullName;
         this.email = email;
         this.avatarFile = avatarFile;
         this.coolcoins = coolcoins;
+        this.backpacksDAO = backpacksDAO;
     }
 
     public Codecooler(int accountId,
@@ -37,9 +40,11 @@ public class Codecooler {
                       String fullName,
                       String email,
                       String avatarFile,
-                      int coolcoins) {
+                      int coolcoins,
+                      BackpacksDAO backpacksDAO
+                      ) {
 
-        this(fullName, email, avatarFile, coolcoins);
+        this(fullName, email, avatarFile, coolcoins, backpacksDAO);
         this.accountId = accountId;
         this.classId = classId;
         this.backpackId = backpackId;
@@ -91,7 +96,6 @@ public class Codecooler {
     }
 
     public List<Backpack> getBackpacks() {
-        BackpacksDAO backpacksDAO = new BackpacksDAO();
         List<Backpack> allBackpacks = backpacksDAO.getAll();
 
         List<Backpack> codecoolerBackpacks = new ArrayList<>();

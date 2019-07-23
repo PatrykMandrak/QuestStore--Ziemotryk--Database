@@ -41,7 +41,8 @@ public class CodecoolersDAO implements IDAO<Codecooler> {
                     resultSet.getString("full_name"),
                     resultSet.getString("email"),
                     resultSet.getString("avatar_file"),
-                    resultSet.getInt("coolcoins")
+                    resultSet.getInt("coolcoins"),
+                    new BackpacksDAO()
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +68,8 @@ public class CodecoolersDAO implements IDAO<Codecooler> {
                                 resultSet.getString("full_name"),
                                 resultSet.getString("email"),
                                 resultSet.getString("avatar_file"),
-                                resultSet.getInt("coolcoins")
+                                resultSet.getInt("coolcoins"),
+                                new BackpacksDAO()
                         )
                 );
             }
